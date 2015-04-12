@@ -26,7 +26,7 @@ RUN apt-get update \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
-        ca-certificates git build-essential libncurses5-dev libssl-dev
+        ca-certificates git build-essential libncurses5-dev libssl-dev \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
@@ -52,8 +52,6 @@ ADD core /root/adb/system/core/
    
 RUN cd /root/adb/system/core/adb && make   
 RUN cd /root/adb/system/core/fastboot && make
-
-#RUN chmod -R a+rwx /home/ddk/adb/  
  
 RUN chmod a+x /root/adb/system/core/adb/adb 
 RUN mv /root/adb/system/core/adb/adb /usr/bin

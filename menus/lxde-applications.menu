@@ -1,0 +1,12 @@
+<!DOCTYPE Menu PUBLIC "-//freedesktop//DTD Menu 1.0//EN" "http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd">
+<Menu>
+   <Name>DDK Menu Extension</Name>
+   <MergeFile type="parent">/etc/xdg/menus/lxde-applications.menu</MergeFile>
+   <Menu>
+      <Name>Java Tools</Name>
+      <Directory>ddk_menu.directory</Directory>
+      <Include>
+         <And><Category>CustomMenuCategory</Category></And>
+      </Include>
+   </Menu>
+</Menu>

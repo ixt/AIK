@@ -5,7 +5,7 @@
 FROM 32bit/ubuntu:14.04
 
 # We also want a 32-bit Docker:
-# http://mwhiteley.com/linux-containers/2013/08/31/docker-on-i386.html
+# http://blenderfox.com/2014/09/14/building-docker-io-on-32-bit-arch/
 
 MAINTAINER Giles Greenway <giles.greenway@kcl.ac.uk>
 # Also gratefully stolen from docker-ubuntu-vnc-desktop:
@@ -37,30 +37,53 @@ RUN apt-get update \
 # Build instructions and Makefiles gratefully stolen from here:
 # http://android.serverbox.ch/?p=1217
 
-RUN mkdir -p /root/adb/system
-RUN cd /root/adb/system \
+RUN mkdir -p /tools/adb/system
+RUN cd tools/adb/system \
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/system/core \
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/system/extras
 
-RUN mkdir -p /root/adb/external    
-RUN cd /root/adb/external \    
+RUN mkdir -p /tools/adb/external    
+RUN cd /tools/adb/external \    
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/external/zlib \
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/external/openssl \
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/external/libselinux    
     
-ADD core /root/adb/system/core/    
+ADD core /tools/adb/system/core/    
    
-RUN cd /root/adb/system/core/adb && make   
-RUN cd /root/adb/system/core/fastboot && make
+RUN cd /tools/adb/system/core/adb && make   
+RUN cd /tools/adb/system/core/fastboot && make
  
-RUN chmod a+x /root/adb/system/core/adb/adb 
-RUN mv /root/adb/system/core/adb/adb /usr/bin
+RUN chmod a+x /tools/adb/system/core/adb/adb 
+RUN ln -s /adb/system/core/adb/adb /usr/bin/adb
  
-RUN chmod a+x /root/adb/system/core/fastboot/fastboot 
-RUN mv /root/adb/system/core/fastboot/fastboot /usr/fastboot
+RUN chmod a+x /tools/adb/system/core/fastboot/fastboot 
+RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
+
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre
+
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends unzip wget nano screen
+
+# Ubuntu's Gradle package didn't deign to come with the "distribution" plugin...
+RUN cd /tools && wget https://services.gradle.org/distributions/gradle-2.3-bin.zip && unzip gradle-2.3-bin.zip && rm *.zip
+ENV GRADLE_HOME /tools/gradle-2.3
+
+# Build JD-GUI: http://jd.benow.ca/
+RUN cd /tools && git clone https://github.com/java-decompiler/jd-gui.git && cd jd-gui \
+    && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
+
+ENV USERNAME ubuntu    
+RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \
+    && echo "$USERNAME:$PASS" | chpasswd    
+
+RUN mkdir -p /home/$USERNAME/.config/menus     
+ADD menus /home/$USERNAME/.config/menus  
+    
+RUN mkdir -p /home/$USERNAME/.local/share/
+ADD desktop-directories /home/$USERNAME/.local/share/desktop-directories/
+ADD applications /home/$USERNAME/.local/share/applications/ 
  
 ADD noVNC /noVNC/
-ADD startup.sh /
+ADD startup.sh / 
 ADD supervisord.conf /
 EXPOSE 6080
 EXPOSE 5900

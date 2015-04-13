@@ -4,5 +4,5 @@ Exec=java -jar /tools/jd-gui/dist/jd-gui-1.0.0-RC3.jar
 Comment=
 Icon=
 NoDisplay=false
-Categories=CustomMenuCategory;
+Categories=AndroidTools;
 Type=Application

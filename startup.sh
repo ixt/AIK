@@ -11,6 +11,4 @@ mkdir -p /var/run/sshd
 
 /usr/bin/supervisord -c /supervisord.conf
 
-while [ 1 ]; do
-    /bin/bash
-done
+/bin/bash

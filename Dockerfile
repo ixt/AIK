@@ -71,16 +71,33 @@ ENV GRADLE_HOME /tools/gradle-2.3
 RUN cd /tools && git clone https://github.com/java-decompiler/jd-gui.git && cd jd-gui \
     && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
 
+# Build dex2jar: https://github.com/pxb1988/dex2jar    
+RUN cd /tools && git clone https://github.com/pxb1988/dex2jar.git && cd dex2jar \
+    && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
+        
+# Install a funny little tool for grabbing .apk files from the Google PlayStore:
+# http://codingteam.net/project/googleplaydownloader
+# No, this isn't in Trusty back-ports... http://packages.ubuntu.com/search?keywords=python-ndg-httpsclient    
+RUN cd /tools/ && wget http://cz.archive.ubuntu.com/ubuntu/pool/universe/n/ndg-httpsclient/python-ndg-httpsclient_0.3.2-1_all.deb
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends subversion python-pip python-openssl python-support python-configparser python-protobuf python-pyasn1 python-requests python-wxgtk2.8
+RUN cd /tools && dpkg -i python-ndg-httpsclient_0.3.2-1_all.deb
+# The source seems to be more reliable than their grotty .deb... ...it can't generate the Android IDs. 
+RUN cd /tools && svn checkout http://svn.codingteam.net/googleplaydownloader
+
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \
-    && echo "$USERNAME:$PASS" | chpasswd    
-
-RUN mkdir -p /home/$USERNAME/.config/menus     
-ADD menus /home/$USERNAME/.config/menus  
+    && echo "$USERNAME:$PASS" | chpasswd 
     
+# Everything you never wanted to know about LXDE menus, and were too indifferent to ask:
+# https://lkubaski.wordpress.com/2012/11/02/adding-lxde-start-menu-sections/
+RUN mkdir -p /home/$USERNAME/.config/menus
+ADD menus /home/$USERNAME/.config/menus 
+RUN chown -R $USERNAME /home/$USERNAME/.config/
+
 RUN mkdir -p /home/$USERNAME/.local/share/
 ADD desktop-directories /home/$USERNAME/.local/share/desktop-directories/
-ADD applications /home/$USERNAME/.local/share/applications/ 
+ADD applications /home/$USERNAME/.local/share/applications/
+RUN chown -R $USERNAME /home/$USERNAME/.local/
  
 ADD noVNC /noVNC/
 ADD startup.sh / 

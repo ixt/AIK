@@ -3,10 +3,10 @@
    <Name>DDK Menu Extension</Name>
    <MergeFile type="parent">/etc/xdg/menus/lxde-applications.menu</MergeFile>
    <Menu>
-      <Name>Java Tools</Name>
+      <Name>Android Tools</Name>
       <Directory>ddk_menu.directory</Directory>
       <Include>
-         <And><Category>CustomMenuCategory</Category></And>
+         <And><Category>AndroidTools</Category></And>
       </Include>
    </Menu>
 </Menu>

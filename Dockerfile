@@ -10,7 +10,6 @@ FROM 32bit/ubuntu:14.04
 MAINTAINER Giles Greenway <giles.greenway@kcl.ac.uk>
 # Also gratefully stolen from docker-ubuntu-vnc-desktop:
 # https://github.com/fcwu/docker-ubuntu-vnc-desktop
-#MAINTAINER Doro Wu <fcwu.tw@gmail.com>
 
 ENV DEBIAN_FRONTEND noninteractive
 ENV HOME /root
@@ -83,6 +82,21 @@ RUN apt-get update && apt-get install -y --force-yes --no-install-recommends sub
 RUN cd /tools && dpkg -i python-ndg-httpsclient_0.3.2-1_all.deb
 # The source seems to be more reliable than their grotty .deb... ...it can't generate the Android IDs. 
 RUN cd /tools && svn checkout http://svn.codingteam.net/googleplaydownloader
+RUN rm /tools/*.deb
+
+# Build Apktool: http://ibotpeaches.github.io/Apktool/
+RUN cd /usr/local/bin/ && wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool && chmod a+x apktool
+RUN cd /tools && git clone git://github.com/iBotPeaches/Apktool.git
+RUN export PATH=$PATH:$GRADLE_HOME/bin && cd /tools/Apktool && gradle build fatJar
+RUN cp /tools/Apktool/brut.apktool/apktool-cli/build/libs/apktool-cli.jar /usr/local/bin/apktool.jar
+RUN chmod a+x /usr/local/bin/apktool.jar
+
+# Build smali/baksmali: https://code.google.com/p/smali/
+RUN cd /tools && git clone https://code.google.com/p/smali/
+RUN export PATH=$PATH:$GRADLE_HOME/bin && cd /tools/smali && gradle build
+RUN cp /tools/smali/scripts/* /usr/bin
+RUN cp /tools/smali/baksmali/build/libs/baksmali.jar /usr/bin
+RUN cp /tools/smali/smali/build/libs/smali.jar /usr/bin
 
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \

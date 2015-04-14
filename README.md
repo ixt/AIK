@@ -4,7 +4,7 @@ DroidDestructionKit
 The DroidDestructionKit is a Docker image to help beginners reverse engineer Android apps and examine their network traffic. It is intended
 to be distributed with a VirtualBox appliance.
 
-In addition to all the tools the imag contains, it is also made possible by [Doro Wu's](https://github.com/fcwu)
+In addition to all the tools the image contains, it is also made possible by [Doro Wu's](https://github.com/fcwu)
 [Docker Ubuntu VNC Desktop](https://github.com/fcwu/docker-ubuntu-vnc-desktop) and the [Docker 32bit Developer Community](https://github.com/docker-32bit).
 
 So that as many people can use it as possible, we prefer that it is built on 32-bit virtual machines. Docker doesn't officially support

@@ -43,10 +43,10 @@ lxc-attach -n Ubuntu '/home/ubuntu/dockerCompile.sh'
 mkdir -p $HOME/build
 
 # Get the tarred binaries out of the container.
-sshpass -p 'ubuntu' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ubuntu@$IP:/home/ubuntu/docker.txz $HOME/build
+sshpass -p 'ubuntu' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ubuntu@$IP:/home/ubuntu/docker*.txz $HOME/build
 
 cd $HOME/build
-tar -xJf docker.txz
+tar -xJf docker_latest.txz
 p=$(ls -d ./*/)
 cd $p/binary
 

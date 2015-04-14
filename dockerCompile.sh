@@ -47,7 +47,7 @@ cd $GOPATH/src/github.com/docker/docker/bundles
 
 for d in $(ls -d */ | grep -P -o ".*(?=/)")
 do
-echo Creating docker.txz
-tar -cJvvvvf docker.txz $d
+echo Creating docker_$d.txz
+tar -cJvvvvf docker_$d.txz $d
 mv *.txz /home/ubuntu
 done

@@ -7,6 +7,9 @@
 # http://releases.ubuntu.com/14.04/
 # http://releases.ubuntu.com/14.04/ubuntu-14.04.2-server-i386.iso
 
+lxc-stop -n Ubuntu
+lxc-destroy -n Ubuntu
+
 ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -P password
 
 # We need the last two packages to build images.
@@ -28,21 +31,21 @@ IP=$(lxc-attach -n Ubuntu -- ifconfig | grep 'inet addr' | head -n 1 | cut -d ':
 echo Main IP: $IP
 
 echo Pushing dockerCompile.sh to IP $IP
-sshpass -p 'ubuntu>' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa $HOME/dockerCompile.sh ubuntu@$IP:/home/ubuntu
+sshpass -p 'ubuntu' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa $HOME/DroidDestructionKit/dockerCompile.sh ubuntu@$IP:/home/ubuntu
 while [ $? -ne 0 ]
 do
-sshpass -p 'ubuntu>' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa $HOME/dockerCompile.sh ubuntu@$IP:/home/ubuntu
+sshpass -p 'ubuntu' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa $HOME/DroidDestructionKit/dockerCompile.sh ubuntu@$IP:/home/ubuntu
 done
 
 # Run the compile script.
 lxc-attach -n Ubuntu '/home/ubuntu/dockerCompile.sh'
 
-mkdir build
+mkdir -p $HOME/build
 
 # Get the tarred binaries out of the container.
-sshpass -p 'ubuntu>' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ubuntu@$IP:/home/ubuntu/docker.txz build
+sshpass -p 'ubuntu>' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ubuntu@$IP:/home/ubuntu/docker.txz $HOME/build
 
-cd build
+cd $HOME/build
 tar -xJf docker.txz
 p=$(ls -d ./*/)
 cd $p/binary

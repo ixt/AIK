@@ -27,8 +27,3 @@ Play with the tools via the VNC Desktop: http://127.0.0.1:6080/vnc.html
 
 <img src="https://raw.githubusercontent.com/kingsBSD/DroidDestructionKit/master/screenshots/ddk_demo.png"/>
 
-
-Run
-```
-docker run -i -t -p 6080:6080 dorowu/ubuntu-desktop-lxde-vnc
-```

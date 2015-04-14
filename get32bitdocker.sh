@@ -46,9 +46,8 @@ mkdir -p $HOME/build
 sshpass -p 'ubuntu' scp -o StrictHostKeyChecking=no -i $HOME/.ssh/id_rsa ubuntu@$IP:/home/ubuntu/docker*.txz $HOME/build
 
 cd $HOME/build
-tar -xJf docker_latest.txz
-p=$(ls -d ./*/)
-cd $p/binary
+tar -xJf docker_*dev.txz
+cd *dev/binary
 
 cp docker /usr/bin
 docker -d &

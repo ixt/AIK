@@ -73,7 +73,10 @@ RUN cd /tools && git clone https://github.com/java-decompiler/jd-gui.git && cd j
 # Build dex2jar: https://github.com/pxb1988/dex2jar    
 RUN cd /tools && git clone https://github.com/pxb1988/dex2jar.git && cd dex2jar \
     && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
-        
+RUN tar -xf /tools/dex2jar/dex-tools/build/distributions/dex-tools-2.1-SNAPSHOT.tar -C /tools/dex2jar/
+RUN chmod a+x /tools/dex2jar/dex-tools-2.1-SNAPSHOT/*.sh
+ENV PATH $PATH:/tools/dex2jar/dex-tools-2.1-SNAPSHOT    
+    
 # Install a funny little tool for grabbing .apk files from the Google PlayStore:
 # http://codingteam.net/project/googleplaydownloader
 # No, this isn't in Trusty back-ports... http://packages.ubuntu.com/search?keywords=python-ndg-httpsclient    

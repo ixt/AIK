@@ -26,6 +26,7 @@ RUN apt-get update \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
         ca-certificates git build-essential libncurses5-dev libssl-dev \
+        nginx php5-common php5-cli php5-fpm \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
@@ -58,9 +59,7 @@ RUN ln -s /adb/system/core/adb/adb /usr/bin/adb
 RUN chmod a+x /tools/adb/system/core/fastboot/fastboot 
 RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
 
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre
-
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends unzip wget nano screen
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre unzip wget nano screen
 
 # Ubuntu's Gradle package didn't deign to come with the "distribution" plugin...
 RUN cd /tools && wget https://services.gradle.org/distributions/gradle-2.3-bin.zip && unzip gradle-2.3-bin.zip && rm *.zip
@@ -105,6 +104,17 @@ ENV USERNAME ubuntu
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \
     && echo "$USERNAME:$PASS" | chpasswd 
     
+RUN mkdir -p /var/www/jquery
+RUN cd /var/www/jquery/ && wget http://code.jquery.com/jquery-2.1.3.js
+RUN cd /var/www && wget http://jqueryui.com/resources/download/jquery-ui-1.11.4.zip \
+    && unzip jquery-ui-1.11.4.zip && rm *.zip
+RUN mkdir -p /var/www/elfinder && cd /var/www/elfinder && wget http://nao-pon.github.io/elFinder-nightly/latests/elfinder-2.1.zip \
+    && unzip elfinder-2.1.zip && rm *.zip
+ADD nginx /etc/nginx/sites-available
+ADD www /var/www 
+RUN chmod -R 0755 /var/www     
+RUN chmod -R a+rw /home/$USERNAME
+
 # Everything you never wanted to know about LXDE menus, and were too indifferent to ask:
 # https://lkubaski.wordpress.com/2012/11/02/adding-lxde-start-menu-sections/
 RUN mkdir -p /home/$USERNAME/.config/menus

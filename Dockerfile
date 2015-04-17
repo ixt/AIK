@@ -38,7 +38,8 @@ RUN apt-get update \
 # http://android.serverbox.ch/?p=1217
 
 RUN mkdir -p /tools/adb/system
-RUN cd tools/adb/system \
+WORKDIR /tools/
+RUN cd /tools/adb/system \
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/system/core \
     && git clone -b android-4.4_r1.2 https://android.googlesource.com/platform/system/extras
 
@@ -54,7 +55,7 @@ RUN cd /tools/adb/system/core/adb && make
 RUN cd /tools/adb/system/core/fastboot && make
  
 RUN chmod a+x /tools/adb/system/core/adb/adb 
-RUN ln -s /adb/system/core/adb/adb /usr/bin/adb
+RUN ln -s /tools/adb/system/core/adb/adb /usr/bin/adb
  
 RUN chmod a+x /tools/adb/system/core/fastboot/fastboot 
 RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
@@ -62,16 +63,15 @@ RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre unzip wget nano screen
 
 # Ubuntu's Gradle package didn't deign to come with the "distribution" plugin...
-RUN cd /tools && wget https://services.gradle.org/distributions/gradle-2.3-bin.zip && unzip gradle-2.3-bin.zip && rm *.zip
+RUN wget https://services.gradle.org/distributions/gradle-2.3-bin.zip && unzip gradle-2.3-bin.zip && rm *.zip
 ENV GRADLE_HOME /tools/gradle-2.3
 
 # Build JD-GUI: http://jd.benow.ca/
-RUN cd /tools && git clone https://github.com/java-decompiler/jd-gui.git && cd jd-gui \
-    && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
-
+RUN git clone https://github.com/java-decompiler/jd-gui.git && cd jd-gui && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
+    
 # Build dex2jar: https://github.com/pxb1988/dex2jar    
-RUN cd /tools && git clone https://github.com/pxb1988/dex2jar.git && cd dex2jar \
-    && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
+RUN git clone https://github.com/pxb1988/dex2jar.git && cd dex2jar && export PATH=$PATH:$GRADLE_HOME/bin && gradle build    
+    
 RUN tar -xf /tools/dex2jar/dex-tools/build/distributions/dex-tools-2.1-SNAPSHOT.tar -C /tools/dex2jar/
 RUN chmod a+x /tools/dex2jar/dex-tools-2.1-SNAPSHOT/*.sh
 ENV PATH $PATH:/tools/dex2jar/dex-tools-2.1-SNAPSHOT    
@@ -79,27 +79,41 @@ ENV PATH $PATH:/tools/dex2jar/dex-tools-2.1-SNAPSHOT
 # Install a funny little tool for grabbing .apk files from the Google PlayStore:
 # http://codingteam.net/project/googleplaydownloader
 # No, this isn't in Trusty back-ports... http://packages.ubuntu.com/search?keywords=python-ndg-httpsclient    
-RUN cd /tools/ && wget http://cz.archive.ubuntu.com/ubuntu/pool/universe/n/ndg-httpsclient/python-ndg-httpsclient_0.3.2-1_all.deb
+RUN wget http://cz.archive.ubuntu.com/ubuntu/pool/universe/n/ndg-httpsclient/python-ndg-httpsclient_0.3.2-1_all.deb
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends subversion python-pip python-openssl python-support python-configparser python-protobuf python-pyasn1 python-requests python-wxgtk2.8
-RUN cd /tools && dpkg -i python-ndg-httpsclient_0.3.2-1_all.deb
+RUN dpkg -i python-ndg-httpsclient_0.3.2-1_all.deb
 # The source seems to be more reliable than their grotty .deb... ...it can't generate the Android IDs. 
-RUN cd /tools && svn checkout http://svn.codingteam.net/googleplaydownloader
+RUN svn checkout http://svn.codingteam.net/googleplaydownloader
 RUN rm /tools/*.deb
 
 # Build Apktool: http://ibotpeaches.github.io/Apktool/
 RUN cd /usr/local/bin/ && wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool && chmod a+x apktool
-RUN cd /tools && git clone git://github.com/iBotPeaches/Apktool.git
+RUN git clone git://github.com/iBotPeaches/Apktool.git
 RUN export PATH=$PATH:$GRADLE_HOME/bin && cd /tools/Apktool && gradle build fatJar
 RUN cp /tools/Apktool/brut.apktool/apktool-cli/build/libs/apktool-cli.jar /usr/local/bin/apktool.jar
 RUN chmod a+x /usr/local/bin/apktool.jar
 
 # Build smali/baksmali: https://code.google.com/p/smali/
-RUN cd /tools && git clone https://code.google.com/p/smali/
+RUN git clone https://code.google.com/p/smali/
 RUN export PATH=$PATH:$GRADLE_HOME/bin && cd /tools/smali && gradle build
 RUN cp /tools/smali/scripts/* /usr/bin
 RUN cp /tools/smali/baksmali/build/libs/baksmali.jar /usr/bin
 RUN cp /tools/smali/smali/build/libs/smali.jar /usr/bin
 
+# http://www.symantec.com/connect/blogs/monitoring-android-network-traffic-part-iv-forwarding-wireshark
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends zenity wireshark flex byacc \
+    binutils-arm-linux-gnueabi gcc-arm-linux-gnueabi g++-arm-linux-gnueabi libc6-armel-cross libc6-dev-armel-cross
+ENV CC arm-linux-gnueabi-gcc
+RUN wget http://sourceforge.net/projects/netcat/files/netcat/0.7.1/netcat-0.7.1.tar.gz && tar -xvzf netcat-0.7.1.tar.gz
+RUN cd /tools/netcat-0.7.1 && export LDFLAGS=-static && ./configure --host=arm-linux \
+    && make && arm-linux-gnueabi-strip src/netcat    
+# http://www.symantec.com/connect/blogs/monitoring-android-network-traffic-part-ii-cross-compiling-tcpdump    
+RUN wget http://www.tcpdump.org/release/tcpdump-4.7.3.tar.gz && wget http://www.tcpdump.org/release/libpcap-1.7.2.tar.gz    
+RUN tar -xvzf libpcap-1.7.2.tar.gz && cd libpcap-1.7.2 && ./configure --host=arm-linux --with-pcap=linux && make     
+RUN tar zxvf tcpdump-4.7.3.tar.gz && cd tcpdump-4.7.3 && export ac_cv_linux_vers=3 && export CPPFLAGS=-static \
+    && export LDFLAGS=-static && ./configure --host=arm-linux --disable-ipv6 && make && arm-linux-gnueabi-strip tcpdump    
+RUN rm *.gz    
+    
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \
     && echo "$USERNAME:$PASS" | chpasswd 

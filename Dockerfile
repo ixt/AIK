@@ -104,6 +104,7 @@ ENV USERNAME ubuntu
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \
     && echo "$USERNAME:$PASS" | chpasswd 
     
+# http://elfinder.org/    
 RUN mkdir -p /var/www/jquery
 RUN cd /var/www/jquery/ && wget http://code.jquery.com/jquery-2.1.3.js
 RUN cd /var/www && wget http://jqueryui.com/resources/download/jquery-ui-1.11.4.zip \
@@ -114,6 +115,11 @@ ADD nginx /etc/nginx/sites-available
 ADD www /var/www 
 RUN chmod -R 0755 /var/www     
 RUN chmod -R a+rw /home/$USERNAME
+
+# http://www.mkdocs.org/
+RUN pip install mkdocs 
+RUN mkdir -p /var/docs/ddkdocs && chmod -R a+r /var/docs/ddkdocs
+ADD ddkdocs /var/docs/ddkdocs
 
 # Everything you never wanted to know about LXDE menus, and were too indifferent to ask:
 # https://lkubaski.wordpress.com/2012/11/02/adding-lxde-start-menu-sections/
@@ -129,8 +135,10 @@ RUN chown -R $USERNAME /home/$USERNAME/.local/
 ADD noVNC /noVNC/
 ADD startup.sh / 
 ADD supervisord.conf /
+
 EXPOSE 6080
 EXPOSE 5900
+EXPOSE 80
 EXPOSE 22
 WORKDIR /
 ENTRYPOINT ["/startup.sh"]

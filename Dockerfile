@@ -60,7 +60,7 @@ RUN ln -s /tools/adb/system/core/adb/adb /usr/bin/adb
 RUN chmod a+x /tools/adb/system/core/fastboot/fastboot 
 RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
 
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre unzip wget nano screen
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre unzip wget nano screen gedit
 
 # Ubuntu's Gradle package didn't deign to come with the "distribution" plugin...
 RUN wget https://services.gradle.org/distributions/gradle-2.3-bin.zip && unzip gradle-2.3-bin.zip && rm *.zip
@@ -101,7 +101,7 @@ RUN cp /tools/smali/baksmali/build/libs/baksmali.jar /usr/bin
 RUN cp /tools/smali/smali/build/libs/smali.jar /usr/bin
 
 # http://www.symantec.com/connect/blogs/monitoring-android-network-traffic-part-iv-forwarding-wireshark
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends zenity wireshark flex byacc \
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends zenity wireshark tshark flex byacc \
     binutils-arm-linux-gnueabi gcc-arm-linux-gnueabi g++-arm-linux-gnueabi libc6-armel-cross libc6-dev-armel-cross
 ENV CC arm-linux-gnueabi-gcc
 RUN wget http://sourceforge.net/projects/netcat/files/netcat/0.7.1/netcat-0.7.1.tar.gz && tar -xvzf netcat-0.7.1.tar.gz
@@ -115,8 +115,8 @@ RUN tar zxvf tcpdump-4.7.3.tar.gz && cd tcpdump-4.7.3 && export ac_cv_linux_vers
 RUN rm *.gz && mkdir -p /tools/droidscripts
 ADD droidscripts /tools/droidscripts
     
-RUN mkdir -p /tools/droidbin && cp /tools/netcat-0.7.1/src/netcat /tools/droidbin \
-    && cp /tools/tcpdump-4.7.3/tcpdump /tools/droidbin/ && chmod -R a+rx /tools/droidbin
+RUN mkdir -p /tools/droidbin && ln -s /tools/netcat-0.7.1/src/netcat /tools/droidbin/netcat \
+    && cp /tools/tcpdump-4.7.3/tcpdump /tools/droidbin/tcpdump && chmod -R a+rx /tools/droidbin
 ENV droidbin /tools/droidbin
 
     

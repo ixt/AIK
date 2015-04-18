@@ -112,7 +112,13 @@ RUN wget http://www.tcpdump.org/release/tcpdump-4.7.3.tar.gz && wget http://www.
 RUN tar -xvzf libpcap-1.7.2.tar.gz && cd libpcap-1.7.2 && ./configure --host=arm-linux --with-pcap=linux && make     
 RUN tar zxvf tcpdump-4.7.3.tar.gz && cd tcpdump-4.7.3 && export ac_cv_linux_vers=3 && export CPPFLAGS=-static \
     && export LDFLAGS=-static && ./configure --host=arm-linux --disable-ipv6 && make && arm-linux-gnueabi-strip tcpdump    
-RUN rm *.gz    
+RUN rm *.gz && mkdir -p /tools/droidscripts
+ADD droidscripts /tools/droidscripts
+    
+RUN mkdir -p /tools/droidbin && cp /tools/netcat-0.7.1/src/netcat /tools/droidbin \
+    && cp /tools/tcpdump-4.7.3/tcpdump /tools/droidbin/ && chmod -R a+rx /tools/droidbin
+ENV droidbin /tools/droidbin
+
     
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \

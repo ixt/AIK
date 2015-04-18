@@ -14,6 +14,8 @@ mkdocs build
 mkdir -p /var/www/docs
 cp -r /var/docs/ddkdocs/site/* /var/www/docs
 
+cd /tools
+
 /usr/bin/supervisord -c /supervisord.conf
 
 /bin/bash

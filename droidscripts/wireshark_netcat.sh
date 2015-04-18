@@ -18,15 +18,17 @@ then
     adb push $droidbin/tcpdump /storage/sdcard0/
     adb shell "su -c 'cp /storage/sdcard0/tcpdump /system/xbin; chmod 555 /system/xbin/tcpdump' "
 fi
-
+  
 adb forward tcp:31337 tcp:31337
 
 adb shell "su -c 'tcpdump -i wlan0 -s 1514 -w - -nS port 80 | netcat -l -p 31337' " &
 adb_pid=$!
-
-nc localhost 31337 | wireshark -i - -kS
-
-kill $adb_pid
+echo adb pid: $adb_pid
+sleep 2
+nc localhost 31337 | wireshark -i - -kS &
+while pgrep wireshark$ > /dev/null; do sleep 1; done
+echo Done with Wireshark.
+kill -9 $adb_pid
 
 
 

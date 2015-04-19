@@ -139,6 +139,7 @@ RUN mkdir -p /var/docs/ddkdocs && chmod -R a+r /var/docs/ddkdocs
 ADD ddkdocs /var/docs/ddkdocs
 
 ADD droidscripts /tools/droidscripts
+RUN mkdir -p /home/$USERNAME/screenshots && chmod -R a+rwx /home/$USERNAME/screenshots
 
 # Everything you never wanted to know about LXDE menus, and were too indifferent to ask:
 # https://lkubaski.wordpress.com/2012/11/02/adding-lxde-start-menu-sections/

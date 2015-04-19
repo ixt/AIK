@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Pull .apk
+Exec=/tools/droidscripts/do_pull_apk.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidDeviceTools;
+Type=Application

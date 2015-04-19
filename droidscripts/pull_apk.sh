@@ -8,16 +8,12 @@ then
         echo Nothing selected.
         exit 0
 fi
-echo $pkg
+echo Package: $pkg
 # http://stackoverflow.com/questions/26746853/strange-behaviour-of-adb-pull-in-bash-script
 apk=$(adb shell "su -c 'ls data/app/*.apk '" | grep "$pkg" | tr -d '\r')
-echo $apk
+echo .apk file: $apk
 file=$(zenity --file-selection --directory --filename=$HOME)
-echo $file
-if [[ -w $FILE ]]
-then
-        cd $file
-        adb pull $apk
-else
-        zenity --error --text="$file is not writeable."
-fi
+echo Directory: $file
+cd $file
+adb pull $apk
+

@@ -11,7 +11,7 @@ then
 fi
 
 # Is USB debugging enabled?
-adb shell ls
+adb shell "ls" > /dev/null
 if [ "$?" != "0" ]
 then
     zenity --error --text="Is USB debugging enabled?"

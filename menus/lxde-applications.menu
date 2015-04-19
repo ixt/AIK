@@ -3,10 +3,17 @@
    <Name>DDK Menu Extension</Name>
    <MergeFile type="parent">/etc/xdg/menus/lxde-applications.menu</MergeFile>
    <Menu>
-      <Name>Android Tools</Name>
+      <Name>Android Package Tools</Name>
       <Directory>ddk_menu.directory</Directory>
       <Include>
-         <And><Category>AndroidTools</Category></And>
+         <And><Category>AndroidPackageTools</Category></And>
+      </Include>
+   </Menu>
+   <Menu>
+      <Name>Android Device Tools</Name>
+      <Directory>ddk_menu.directory</Directory>
+      <Include>
+         <And><Category>AndroidDeviceTools</Category></And>
       </Include>
    </Menu>
 </Menu>

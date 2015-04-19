@@ -112,14 +112,11 @@ RUN wget http://www.tcpdump.org/release/tcpdump-4.7.3.tar.gz && wget http://www.
 RUN tar -xvzf libpcap-1.7.2.tar.gz && cd libpcap-1.7.2 && ./configure --host=arm-linux --with-pcap=linux && make     
 RUN tar zxvf tcpdump-4.7.3.tar.gz && cd tcpdump-4.7.3 && export ac_cv_linux_vers=3 && export CPPFLAGS=-static \
     && export LDFLAGS=-static && ./configure --host=arm-linux --disable-ipv6 && make && arm-linux-gnueabi-strip tcpdump    
-RUN rm *.gz && mkdir -p /tools/droidscripts
-ADD droidscripts /tools/droidscripts
-    
+RUN rm *.gz && mkdir -p /tools/droidscripts   
 RUN mkdir -p /tools/droidbin && ln -s /tools/netcat-0.7.1/src/netcat /tools/droidbin/netcat \
     && cp /tools/tcpdump-4.7.3/tcpdump /tools/droidbin/tcpdump && chmod -R a+rx /tools/droidbin
 ENV droidbin /tools/droidbin
 
-    
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \
     && echo "$USERNAME:$PASS" | chpasswd 
@@ -140,6 +137,8 @@ RUN chmod -R a+rw /home/$USERNAME
 RUN pip install mkdocs 
 RUN mkdir -p /var/docs/ddkdocs && chmod -R a+r /var/docs/ddkdocs
 ADD ddkdocs /var/docs/ddkdocs
+
+ADD droidscripts /tools/droidscripts
 
 # Everything you never wanted to know about LXDE menus, and were too indifferent to ask:
 # https://lkubaski.wordpress.com/2012/11/02/adding-lxde-start-menu-sections/

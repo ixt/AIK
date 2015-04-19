@@ -4,5 +4,5 @@ Exec=python /tools/googleplaydownloader/googleplaydownloader/googleplaydownloade
 Comment=
 Icon=
 NoDisplay=false
-Categories=AndroidTools;
+Categories=AndroidPackageTools;
 Type=Application

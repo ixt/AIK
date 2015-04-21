@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=JD-GUI
-Exec=java -jar /tools/jd-gui/dist/jd-gui-1.0.0-RC3.jar
+Exec=java -jar /tools/jd-gui/dist/jd-gui-1.0.0-RC4.jar
 Comment=
 Icon=
 NoDisplay=false

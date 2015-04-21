@@ -22,7 +22,7 @@ then
 fi
 
 adb forward tcp:31337 tcp:31337
-adb shell "su -c 'tcpdump -i wlan0 -s 1514 -w - -nS | netcat -l -p 31337' " &
+adb shell "su -c 'tcpdump -i wlan0 -s 0 -w - -nS | netcat -l -p 31337' " &
 adb_pid=$!
 echo adb pid: $adb_pid
 while [ -v "$(adb shell ps | grep netcat)" ]

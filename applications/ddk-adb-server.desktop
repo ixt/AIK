@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=
-Exec=/tools/droidscripts/do_ws_nc.sh
+Name=ADB server
+Exec=/tools/droidscripts/restart_adb.sh
 Comment=
 Icon=
 Terminal=true

@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=ADB server
-Exec=sudo /tools/droidscripts/restart_adb.sh &
-Comment=
-Icon=
-Terminal=true
-NoDisplay=false
-Categories=AndroidDeviceTools;
-Type=Application

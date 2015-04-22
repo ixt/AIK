@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=ADB server
-Exec=/tools/droidscripts/restart_adb.sh
+Exec=sudo /tools/droidscripts/restart_adb.sh
 Comment=
 Icon=
 Terminal=true

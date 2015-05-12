@@ -118,6 +118,16 @@ RUN mkdir -p /tools/droidbin && ln -s /tools/netcat-0.7.1/src/netcat /tools/droi
 ENV droidbin /tools/droidbin
 ENV CC gcc
 
+# https://github.com/google/vpn-reverse-tether
+RUN git clone https://github.com/google/vpn-reverse-tether.git
+RUN cd vpn-reverse-tether && make -C jni
+
+RUN mkdir -p /tools/apk && chmod -R a+r /tools/apk
+ADD apk /tools/apk
+
+# Android-SSL-TrustKiller: https://github.com/iSECPartners/Android-SSL-TrustKiller
+RUN cd /tools/apk && wget https://github.com/iSECPartners/Android-SSL-TrustKiller/releases/download/v1/Android-SSL-TrustKiller.apk
+
 # AndroGuard http://code.google.com/p/androguard/wiki/Installation
 RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends python-dev mercurial python-setuptools g++ \
@@ -133,15 +143,14 @@ RUN cd python-magic && python setup.py install
 
 # http://code.google.com/p/snappy/
 # https://github.com/google/snappy
-RUN wget "https://drive.google.com/uc?export=download&id=0B0xs9kK-b5nMOWIxWGJhMXd6aGs" -O snappy-1.1.2.tar.gz
-RUN tar -xvzf snappy-1.1.2.tar.gz && rm snappy-1.1.2.tar.gz 
-RUN cd snappy-1.1.2 && ./configure && make && make install
+#RUN wget "https://drive.google.com/uc?export=download&id=0B0xs9kK-b5nMOWIxWGJhMXd6aGs" -O snappy-1.1.2.tar.gz
+#RUN tar -xvzf snappy-1.1.2.tar.gz && rm snappy-1.1.2.tar.gz 
+#RUN cd snappy-1.1.2 && ./configure && make && make install
 
 #RUN cd /tools/androguard/elsim && git clone https://github.com/google/snappy.git
 #RUN cd /tools/androguard/elsim && wget http://sparsehash.googlecode.com/files/sparsehash-2.0.2.tar.gz \
 #    && tar -xzf sparsehash-2.0.2.tar.gz && rm sparsehash-2.0.2.tar.gz 
 #RUN cd /tools/androguard/elsim && svn checkout http://muparser.googlecode.com/svn/trunk/ muparser-read-only
-
 
 #RUN mkdir mercury
 #RUN wget http://labs.mwrinfosecurity.com/assets/254/mercury-v1.0.zip
@@ -152,12 +161,11 @@ RUN cd snappy-1.1.2 && ./configure && make && make install
 
 RUN cd androguard && python setup.py install
 
-RUN wget https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz
-RUN tar -xzf gephi-0.8.2-beta.tar.gz && rm gephi-0.8.2-beta.tar.gz
+#RUN wget https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz
+#RUN tar -xzf gephi-0.8.2-beta.tar.gz && rm gephi-0.8.2-beta.tar.gz
 
-
-# Android-SSL-TrustKiller: https://github.com/iSECPartners/Android-SSL-TrustKiller
-RUN wget https://github.com/iSECPartners/Android-SSL-TrustKiller/releases/download/v1/Android-SSL-TrustKiller.apk
+# http://portswigger.net/burp/proxy.html
+RUN wget http://portswigger.net/burp/burpsuite_free_v1.6.01.jar
 
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \

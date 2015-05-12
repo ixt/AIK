@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=.apk similarity
+Exec=/tools/droidscripts/androguardsim.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroguardTools;
+Type=Application

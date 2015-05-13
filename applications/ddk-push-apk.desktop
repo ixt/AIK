@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Push .apk
+Exec=/tools/droidscripts/do_push_apk.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidDeviceTools;
+Type=Application

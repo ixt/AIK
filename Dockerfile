@@ -141,11 +141,17 @@ RUN cd pyfuzzy-0.1.0 && python setup.py install
 RUN git clone git://github.com/ahupp/python-magic.git
 RUN cd python-magic && python setup.py install
 
+# https://github.com/mwrlabs/drozer
+RUN mkdir -p /tools/drozer
+RUN easy_install --allow-hosts pypi.python.org protobuf==2.4.1
+RUN cd drozer && wget https://www.mwrinfosecurity.com/system/assets/933/original/drozer-2.3.4.tar.gz
+RUN cd drozer && tar -xvzf drozer-2.3.4.tar.gz && easy_install ./drozer-2.3.4-py2.7.egg 
+
 # http://code.google.com/p/snappy/
 # https://github.com/google/snappy
-#RUN wget "https://drive.google.com/uc?export=download&id=0B0xs9kK-b5nMOWIxWGJhMXd6aGs" -O snappy-1.1.2.tar.gz
-#RUN tar -xvzf snappy-1.1.2.tar.gz && rm snappy-1.1.2.tar.gz 
-#RUN cd snappy-1.1.2 && ./configure && make && make install
+RUN wget "https://drive.google.com/uc?export=download&id=0B0xs9kK-b5nMOWIxWGJhMXd6aGs" -O snappy-1.1.2.tar.gz
+RUN tar -xvzf snappy-1.1.2.tar.gz && rm snappy-1.1.2.tar.gz 
+RUN cd snappy-1.1.2 && ./configure && make && make install
 
 #RUN cd /tools/androguard/elsim && git clone https://github.com/google/snappy.git
 #RUN cd /tools/androguard/elsim && wget http://sparsehash.googlecode.com/files/sparsehash-2.0.2.tar.gz \

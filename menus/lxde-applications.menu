@@ -16,11 +16,11 @@
          <And><Category>AndroidDeviceTools</Category></And>
       </Include>
    </Menu>
-   <!--<Menu>
+   <Menu>
         <Name>Androguard</Name>
         <Directory>ddk_menu.directory</Directory>
         <Include>
             <And><Category>AndroguardTools</Category></And>
         </Include>
-   </Menu>-->
+   </Menu>
 </Menu>

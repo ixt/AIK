@@ -23,4 +23,11 @@
             <And><Category>AndroguardTools</Category></And>
         </Include>
    </Menu>
+   <Menu>
+    <Name>Tools</Name>
+        <Directory>ddk_menu.directory</Directory>
+        <Include>
+            <And><Category>DDKTools</Category></And>
+        </Include>
+   </Menu>
 </Menu>

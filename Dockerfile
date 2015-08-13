@@ -25,6 +25,7 @@ RUN apt-get update \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
+        qt4-qmake cmake libsqlite3-dev libqt4-dev libqt4-core libqt4-qt3support \
         ca-certificates git build-essential libncurses5-dev libssl-dev \
         nginx php5-common php5-cli php5-fpm \
     && apt-get autoclean \
@@ -141,6 +142,10 @@ RUN cd pyfuzzy-0.1.0 && python setup.py install
 RUN git clone git://github.com/ahupp/python-magic.git
 RUN cd python-magic && python setup.py install
 
+# https://github.com/sqlitebrowser/sqlitebrowser/releases/tag/v3.7.0
+RUN wget https://github.com/sqlitebrowser/sqlitebrowser/archive/v3.7.0.tar.gz
+RUN tar -xvf v3.7.0.tar.gz && cd sqlitebrowser-3.7.0 && qmake && make
+
 # https://github.com/mwrlabs/drozer
 RUN mkdir -p /tools/drozer
 RUN easy_install --allow-hosts pypi.python.org protobuf==2.4.1
@@ -171,7 +176,7 @@ RUN cd androguard && python setup.py install
 #RUN tar -xzf gephi-0.8.2-beta.tar.gz && rm gephi-0.8.2-beta.tar.gz
 
 # http://portswigger.net/burp/proxy.html
-RUN wget http://portswigger.net/burp/burpsuite_free_v1.6.01.jar
+RUN wget https://portswigger.net/DownloadUpdate.ashx?Product=Free
 
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \

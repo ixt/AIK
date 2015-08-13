@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=apk info
+Exec=/tools/droidscripts/androgapkinfo.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroguardTools;
+Type=Application

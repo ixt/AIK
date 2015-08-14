@@ -1,7 +1,7 @@
 #!/bin/bash
 # Push an Android .apk package to a connected device.
 # Giles R. Greenway 05/2015
-
+adb shell "su -c 'mount -o rw,remount /system' "
 file=$(zenity --file-selection --filename=$HOME/ --title="Choose a .apk file.")
 
 case $? in

@@ -1,7 +1,7 @@
 #!/bin/bash
 # Pull an Android .apk package from a connected device.
 # Giles R. Greenway 04/2015
-
+adb shell "su -c 'mount -o rw,remount /system' "
 pkg=$( adb shell "su -c 'ls data/app' " | grep -P -o "^[a-zA-Z0-9\.]+" | zenity --list --column=Package ) 
 if [ -v "$pkg"]
 then

@@ -1,1 +1,4 @@
-site_name: My Docs
+site_name: DroidDestructionKit Docs
+pages:
+- Home: index.md
+- Android Packages: apk.md

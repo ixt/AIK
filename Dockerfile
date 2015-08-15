@@ -177,6 +177,7 @@ RUN cd androguard && python setup.py install
 
 # http://portswigger.net/burp/proxy.html
 RUN wget https://portswigger.net/DownloadUpdate.ashx?Product=Free
+RUN mv DownloadUpdate.ashx?Product=Free burpsuite_free.jar
 
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \

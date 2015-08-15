@@ -1,6 +1,6 @@
 [Desktop Entry]
 Name=Burp Suite
-Exec=java -jar /tools/burpsuite_free_v1.6.01.jar
+Exec=java -jar /tools/burpsuite_free.jar
 Comment=
 Icon=
 Terminal=false

@@ -21,8 +21,7 @@ lxc-create -t download -n Ubuntu -- --dist ubuntu --release trusty --arch i386 â
 lxc-start -n Ubuntu -d
 
 chroot /var/lib/lxc/Ubuntu/rootfs /bin/bash -c "apt-get install -y --force-yes openssh-server"
-
-lxc-attach -n Ubuntu -- useradd -d /home/ubuntu -m ubuntu && echo ubuntu:ubuntu | chpasswd
+lxc-attach -n Ubuntu -- useradd -d /home/ubuntu -m ubuntu || echo ubuntu:ubuntu | chpasswd
 
 # Find the IP address of the container.
 while [ $(lxc-info -n Ubuntu | grep IP: | sort | uniq | unexpand -a | cut -f3 | wc -l) -lt 1 ];

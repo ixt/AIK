@@ -79,10 +79,8 @@ ENV PATH $PATH:/tools/dex2jar/dex-tools-2.1-SNAPSHOT
     
 # Install a funny little tool for grabbing .apk files from the Google PlayStore:
 # http://codingteam.net/project/googleplaydownloader
-# No, this isn't in Trusty back-ports... http://packages.ubuntu.com/search?keywords=python-ndg-httpsclient    
-RUN wget http://cz.archive.ubuntu.com/ubuntu/pool/universe/n/ndg-httpsclient/python-ndg-httpsclient_0.3.2-1_all.deb
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends subversion python-pip python-openssl python-support python-configparser python-protobuf python-pyasn1 python-requests python-wxgtk2.8
-RUN dpkg -i python-ndg-httpsclient_0.3.2-1_all.deb
+RUN pip install ndg-httpsclient
 # The source seems to be more reliable than their grotty .deb... ...it can't generate the Android IDs. 
 RUN svn checkout http://svn.codingteam.net/googleplaydownloader
 RUN rm /tools/*.deb
@@ -131,11 +129,10 @@ RUN cd /tools/apk && wget https://github.com/iSECPartners/Android-SSL-TrustKille
 
 # AndroGuard http://code.google.com/p/androguard/wiki/Installation
 RUN apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends python-dev mercurial python-setuptools g++ \
+    && apt-get install -y --force-yes --no-install-recommends ipython python-dev mercurial python-setuptools g++ \
     libbz2-dev libmuparser-dev libsparsehash-dev python-ptrace python-pygments python-pydot graphviz \
     liblzma-dev libsnappy-dev python-twisted gawk
 RUN hg clone https://androguard.googlecode.com/hg/ androguard 
-RUN easy_install ipython
 RUN wget http://downloads.sourceforge.net/project/pyfuzzy/pyfuzzy/pyfuzzy-0.1.0/pyfuzzy-0.1.0.tar.gz
 RUN tar xvfz pyfuzzy-0.1.0.tar.gz
 RUN cd pyfuzzy-0.1.0 && python setup.py install

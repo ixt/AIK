@@ -20,8 +20,10 @@ apt-get install -y --force-yes git lxc sshpass aufs-tools cgroup-bin lxc-templat
 lxc-create -t download -n Ubuntu -- --dist ubuntu --release trusty --arch i386 –auth-key $HOME/.ssh/id_rsa.pub
 lxc-start -n Ubuntu -d
 
+# apt seems flakey in lxc-attach...
 chroot /var/lib/lxc/Ubuntu/rootfs /bin/bash -c "apt-get install -y --force-yes openssh-server"
-lxc-attach -n Ubuntu -- useradd -d /home/ubuntu -m ubuntu || echo ubuntu:ubuntu | chpasswd
+# No, lxc-create doesn't create users or start ssh anymore...
+lxc-attach -n Ubuntu -- /bin/bash -c "useradd -d /home/ubuntu -m ubuntu ; echo ubuntu:ubuntu | chpasswd ; service ssh restart"
 
 # Find the IP address of the container.
 while [ $(lxc-info -n Ubuntu | grep IP: | sort | uniq | unexpand -a | cut -f3 | wc -l) -lt 1 ];

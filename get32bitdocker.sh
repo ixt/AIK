@@ -58,8 +58,8 @@ cp docker /usr/bin
 docker -d &
 
 # Save a bit of space trashing the container.
-lxc-stop -n Ubuntu
-lxc-destroy -n Ubuntu
-rm -rf /var/cache/lxc/trusty
+#lxc-stop -n Ubuntu
+#lxc-destroy -n Ubuntu
+#rm -rf /var/cache/lxc/trusty
 
 

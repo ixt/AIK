@@ -5,7 +5,10 @@
 # http://blenderfox.com/2014/09/14/building-docker-io-on-32-bit-arch/
 
 # A few extra dependencies are needed to build btfrs-progs.
-cd /home/ubuntu echo Installing basic dependencies apt-get update && apt-get install -y aufs-tools automake btrfs-tools e2fslibs-dev libblkid-dev zlib1g-dev liblzo2-dev uuid-dev libacl1-dev build-essential curl dpkg-sig git iptables libapparmor-dev libcap-dev libsqlite3-dev lxc mercurial parallel reprepro ruby1.9.1 ruby1.9.1-dev pkg-config libpcre* --no-install-recommends
+cd /home/ubuntu
+echo Installing basic dependencies
+apt-get update
+apt-get install -y aufs-tools automake btrfs-tools e2fslibs-dev libblkid-dev zlib1g-dev liblzo2-dev uuid-dev libacl1-dev build-essential curl dpkg-sig git iptables libapparmor-dev libcap-dev libsqlite3-dev lxc mercurial parallel reprepro ruby1.9.1 ruby1.9.1-dev pkg-config libpcre* --no-install-recommends
 
 # Build Go. Don't hold your breath.
 hg clone -u release https://code.google.com/p/go ./p/go
@@ -38,6 +41,12 @@ cd ..
 
 # FINALLY build docker.
 git clone https://github.com/docker/docker $GOPATH/src/github.com/docker/docker
+
+for f in grep -r "if runtime.GOARCH \!\= \"amd64\" {" $GOPATH/src/* | cut -d: -f1
+do
+echo Patching $f
+sed -i ‘s/if runtime.GOARCH != “amd64” {/if runtime.GOARCH != “amd64” \&\& runtime.GOARCH != “386” {/g’ $f
+done
 
 cd $GOPATH/src/github.com/docker/docker/
 ./hack/make.sh binary

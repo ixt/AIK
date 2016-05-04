@@ -20,9 +20,9 @@ apt-get install -y --force-yes git lxc sshpass aufs-tools cgroup-bin lxc-templat
 lxc-create -t download -n Ubuntu -- --dist ubuntu --release trusty --arch i386 –auth-key $HOME/.ssh/id_rsa.pub
 lxc-start -n Ubuntu -d
 
-chroot /var/lib/lxc/Ubuntu/rootfs
-apt-get install openssh-server
-useradd -d /home/ubuntu -p ubuntu -m ubuntu
+chroot /var/lib/lxc/Ubuntu/rootfs /bin/bash -c "apt-get install -y --force-yes openssh-server"
+
+lxc-attach -n Ubuntu -- useradd -d /home/ubuntu -m ubuntu && echo ubuntu:ubuntu | chpasswd
 
 # Find the IP address of the container.
 while [ $(lxc-info -n Ubuntu | grep IP: | sort | uniq | unexpand -a | cut -f3 | wc -l) -lt 1 ];

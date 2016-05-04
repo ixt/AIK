@@ -13,12 +13,16 @@ lxc-destroy -n Ubuntu
 ssh-keygen -t rsa -f $HOME/.ssh/id_rsa -P password
 
 # We need the last two packages to build images.
-apt-get install -y --force-yes git lxc sshpass aufs-tools cgroup-bin
+apt-get install -y --force-yes git lxc sshpass aufs-tools cgroup-bin lxc-templates
 
 # Docker wants installing in a Docker container. Trick it with a Linux container.
 # This is going to take a while.
-lxc-create -n Ubuntu -t ubuntu — –release trusty –arch i386 –auth-key $HOME/.ssh/id_rsa.pub
+lxc-create -t download -n Ubuntu -- --dist ubuntu --release trusty --arch i386 –auth-key $HOME/.ssh/id_rsa.pub
 lxc-start -n Ubuntu -d
+
+chroot /var/lib/lxc/Ubuntu/rootfs
+apt-get install openssh-server
+useradd -d /home/ubuntu -p ubuntu -m ubuntu
 
 # Find the IP address of the container.
 while [ $(lxc-info -n Ubuntu | grep IP: | sort | uniq | unexpand -a | cut -f3 | wc -l) -lt 1 ];

@@ -1,11 +1,7 @@
 
-# Gratefully stolen from the 32-bit Ubuntu Docker repos:
-# https://github.com/docker-32bit
-# https://registry.hub.docker.com/repos/32bit/
-FROM 32bit/ubuntu:14.04
 
-# We also want a 32-bit Docker:
-# http://blenderfox.com/2014/09/14/building-docker-io-on-32-bit-arch/
+FROM ubuntu:14.04.3
+
 
 MAINTAINER Giles Greenway <giles.greenway@kcl.ac.uk>
 # Also gratefully stolen from docker-ubuntu-vnc-desktop:
@@ -19,15 +15,16 @@ ENV HOME /root
 RUN apt-mark hold initscripts udev plymouth mountall
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
 
-RUN apt-get update \
-    && apt-get install -y --force-yes --no-install-recommends supervisor \
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends supervisor \
         openssh-server pwgen sudo vim-tiny \
         net-tools \
         lxde x11vnc xvfb \
         gtk2-engines-murrine ttf-ubuntu-font-family \
         qt4-qmake cmake libsqlite3-dev libqt4-dev libqt4-core libqt4-qt3support \
         ca-certificates git build-essential libncurses5-dev libssl-dev \
-        nginx php5-common php5-cli php5-fpm \
+        nginx php5-common php5-cli \
+        php5-fpm \
+        python-pip \
     && apt-get autoclean \
     && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
@@ -77,27 +74,18 @@ RUN tar -xf /tools/dex2jar/dex-tools/build/distributions/dex-tools-2.1-SNAPSHOT.
 RUN chmod a+x /tools/dex2jar/dex-tools-2.1-SNAPSHOT/*.sh
 ENV PATH $PATH:/tools/dex2jar/dex-tools-2.1-SNAPSHOT    
     
-# Install a funny little tool for grabbing .apk files from the Google PlayStore:
-# http://codingteam.net/project/googleplaydownloader
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends subversion python-pip python-openssl python-support python-configparser python-protobuf python-pyasn1 python-requests python-wxgtk2.8
-RUN pip install ndg-httpsclient
-# The source seems to be more reliable than their grotty .deb... ...it can't generate the Android IDs. 
-RUN svn checkout http://svn.codingteam.net/googleplaydownloader
-RUN rm /tools/*.deb
+RUN wget http://www.onyxbits.de/sites/default/files/download/25/raccoon-3.7.jar
 
-# Build Apktool: http://ibotpeaches.github.io/Apktool/
-RUN cd /usr/local/bin/ && wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool && chmod a+x apktool
-RUN git clone git://github.com/iBotPeaches/Apktool.git
-RUN export PATH=$PATH:$GRADLE_HOME/bin && cd /tools/Apktool && gradle build fatJar
-RUN cp /tools/Apktool/brut.apktool/apktool-cli/build/libs/apktool-cli.jar /usr/local/bin/apktool.jar
-RUN chmod a+x /usr/local/bin/apktool.jar
+RUN dpkg --add-architecture i386
+RUN apt-get update && apt-get install -y --force-yes libc6:i386 libncurses5:i386 libstdc++6:i386
+RUN wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.2.1.jar
+RUN mv apktool_2.2.1.jar apktool.jar
+RUN wget https://raw.githubusercontent.com/iBotPeaches/Apktool/master/scripts/linux/apktool
+RUN chmod a+x apktool
 
-# Build smali/baksmali: https://code.google.com/p/smali/
-RUN git clone https://code.google.com/p/smali/
-RUN export PATH=$PATH:$GRADLE_HOME/bin && cd /tools/smali && gradle build
-RUN cp /tools/smali/scripts/* /usr/bin
-RUN cp /tools/smali/baksmali/build/libs/baksmali.jar /usr/bin
-RUN cp /tools/smali/smali/build/libs/smali.jar /usr/bin
+RUN wget https://bitbucket.org/JesusFreke/smali/downloads/smali-2.2b4.jar
+RUN wget https://bitbucket.org/JesusFreke/smali/downloads/baksmali-2.2b4.jar
+RUN mv smali-2.2b4.jar smali.jar && mv baksmali-2.2b4.jar baksmali.jar
 
 # http://www.symantec.com/connect/blogs/monitoring-android-network-traffic-part-iv-forwarding-wireshark
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends zenity wireshark tshark flex byacc \
@@ -132,7 +120,7 @@ RUN apt-get update \
     && apt-get install -y --force-yes --no-install-recommends ipython python-dev mercurial python-setuptools g++ \
     libbz2-dev libmuparser-dev libsparsehash-dev python-ptrace python-pygments python-pydot graphviz \
     liblzma-dev libsnappy-dev python-twisted gawk
-RUN hg clone https://androguard.googlecode.com/hg/ androguard 
+RUN git clone https://github.com/androguard/androguard
 RUN wget http://downloads.sourceforge.net/project/pyfuzzy/pyfuzzy/pyfuzzy-0.1.0/pyfuzzy-0.1.0.tar.gz
 RUN tar xvfz pyfuzzy-0.1.0.tar.gz
 RUN cd pyfuzzy-0.1.0 && python setup.py install
@@ -145,9 +133,9 @@ RUN tar -xvf v3.7.0.tar.gz && cd sqlitebrowser-3.7.0 && qmake && make
 
 # https://github.com/mwrlabs/drozer
 RUN mkdir -p /tools/drozer
-RUN easy_install --allow-hosts pypi.python.org protobuf==2.4.1
-RUN cd drozer && wget https://www.mwrinfosecurity.com/system/assets/933/original/drozer-2.3.4.tar.gz
-RUN cd drozer && tar -xvzf drozer-2.3.4.tar.gz && easy_install ./drozer-2.3.4-py2.7.egg 
+RUN cd /tools/drozer && wget https://github.com/mwrlabs/drozer/releases/download/2.3.4/drozer-2.3.4.tar.gz
+RUN cd /tools/drozer && tar -xvzf drozer-2.3.4.tar.gz && easy_install drozer-2.3.4-py2.7.egg
+RUN rm -rf /tools/drozer
 
 # http://code.google.com/p/snappy/
 # https://github.com/google/snappy
@@ -210,7 +198,15 @@ RUN mkdir -p /home/$USERNAME/.local/share/
 ADD desktop-directories /home/$USERNAME/.local/share/desktop-directories/
 ADD applications /home/$USERNAME/.local/share/applications/
 RUN chown -R $USERNAME /home/$USERNAME/.local/
- 
+
+RUN mkdir -p /home/$USERNAME/Raccoon/archives/default/apk_storage/
+RUN chown -R $USERNAME /home/$USERNAME/Raccoon
+RUN chmod -R a+rw /home/$USERNAME/Raccoon
+RUN ln -s /home/$USERNAME/Raccoon/archives/default/apk_storage/ /home/$USERNAME
+RUN mkdir -p /home/$USERNAME/jarfiles
+RUN chown -R $USERNAME /home/$USERNAME/jarfiles
+RUN chmod -R a+rw /home/$USERNAME/jarfiles
+
 ADD noVNC /noVNC/
 ADD startup.sh / 
 ADD supervisord.conf /

@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=GooglePlayDownloader
-Exec=python /tools/googleplaydownloader/googleplaydownloader/googleplaydownloader.py
-Comment=
-Icon=
-NoDisplay=false
-Categories=AndroidPackageTools;
-Type=Application

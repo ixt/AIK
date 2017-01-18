@@ -1,0 +1,15 @@
+PhoneStateListener
+TelephonyManager
+WifiManager
+ConnectivityManager
+LocationListener
+LocationManager
+getLatitude
+getLongitude
+BluetoothAdapter
+BluetoothDevice
+BluetoothServerSocket
+SmsManager
+HttpURLConnection
+ContactsContract
+AudioRecord

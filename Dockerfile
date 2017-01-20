@@ -72,8 +72,8 @@ ENV GRADLE_HOME /tools/gradle-2.3
 
 # Build JD-GUI: http://jd.benow.ca/
 
-RUN paxctl -c /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
-RUN paxctl -m /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+RUN paxctl -c /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
+RUN paxctl -m /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
 
 RUN git clone https://github.com/java-decompiler/jd-gui.git && cd jd-gui && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
     

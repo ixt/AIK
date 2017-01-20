@@ -135,6 +135,7 @@ RUN tar -xvf v3.7.0.tar.gz && cd sqlitebrowser-3.7.0 && qmake && make
 RUN mkdir -p /tools/drozer
 RUN cd /tools/drozer && wget https://github.com/mwrlabs/drozer/releases/download/2.3.4/drozer-2.3.4.tar.gz
 RUN cd /tools/drozer && tar -xvzf drozer-2.3.4.tar.gz && easy_install drozer-2.3.4-py2.7.egg
+RUN cd /tools/apk && wget https://github.com/mwrlabs/drozer/releases/download/2.3.4/drozer-agent-2.3.4.apk
 RUN rm -rf /tools/drozer
 
 # http://code.google.com/p/snappy/

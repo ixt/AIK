@@ -58,13 +58,23 @@ RUN ln -s /tools/adb/system/core/adb/adb /usr/bin/adb
 RUN chmod a+x /tools/adb/system/core/fastboot/fastboot 
 RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
 
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre unzip wget nano screen gedit
+#RUN apt-get update && apt-get install -y --force-yes --no-install-recommends --reinstall software-properties-common
+
+#RUN add-apt-repository ppa:openjdk-r/ppa
+
+RUN update-ca-certificates -f
+
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre paxctl unzip wget nano screen gedit
 
 # Ubuntu's Gradle package didn't deign to come with the "distribution" plugin...
 RUN wget https://services.gradle.org/distributions/gradle-2.3-bin.zip && unzip gradle-2.3-bin.zip && rm *.zip
 ENV GRADLE_HOME /tools/gradle-2.3
 
 # Build JD-GUI: http://jd.benow.ca/
+
+RUN paxctl -c /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+RUN paxctl -m /usr/lib/jvm/java-8-openjdk-amd64/jre/bin/java
+
 RUN git clone https://github.com/java-decompiler/jd-gui.git && cd jd-gui && export PATH=$PATH:$GRADLE_HOME/bin && gradle build
     
 # Build dex2jar: https://github.com/pxb1988/dex2jar    

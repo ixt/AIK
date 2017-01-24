@@ -66,7 +66,7 @@ RUN ln -s /tools/adb/system/core/fastboot/fastboot /usr/bin/fastboot
 
 RUN apt-get update && apt-get install -y --force-yes --no-install-recommends openjdk-7-jdk openjdk-7-jre paxctl unzip wget nano screen gedit
 
-RUN sysctl -w kernel.pax.softmode=1
+#RUN sysctl -w kernel.pax.softmode=1
 RUN paxctl -c /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
 RUN paxctl -m /usr/lib/jvm/java-7-openjdk-amd64/jre/bin/java
 

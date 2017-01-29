@@ -42,6 +42,6 @@ The package name "com.onetouchgame.TheLine" is mentioned at the top of the file,
 3rd parties are present, in this case the notification service "jpush.cn" and the analytics service "umeng". The main
 "application" tag is divided up between "activities", which run in the foreground and interact with the user, and "services",
 which run in the background. Intra and inter-app messages passed between activities and services are called "intents". "receiver"
-tags which correspond to [Android BroadcastReciever objects](https://developer.android.com/reference/android/content/BroadcastReceiver.html).
+tags which correspond to [Android BroadcastReciever objects](https://developer.android.com/reference/android/content/BroadcastReceiver.html)
 define "intent-filters" that specify what types of message they respond to. (Not all receivers need to be defined in the manifest.)
 Looking at the actions covered by the filters can give some idea of what an app is doing, but we can do better by delving into its source-code.

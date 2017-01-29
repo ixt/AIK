@@ -5,7 +5,7 @@ Usually, code written in the Java language is compiled from plain-text .java fil
 with other resources into .jar files ready to be run by a Java Virtual Machine (JVM). For Android, the .class files are converted into .dex files
 for running on its own virtual machine, once called Dalvik on Android Kit-Kat and earlier, now the ART or Android Runtime. This process is mostly
 reverseable, with the correct tools we can recover something close to the original java code from an .apk file. The first stage is to use a tool
-called dex2jar under the "Android Package Tools" menu. Choose an .apk file from the "apk_storage" folder, and a corresponding .jar file will be
+called [dex2jar](https://github.com/pxb1988/dex2jar) under the "Android Package Tools" menu. Choose an .apk file from the "apk_storage" folder, and a corresponding .jar file will be
 created inside the "jarfiles" folder. You can explore the contents of this by opening it with [JD-GUI](http://jd.benow.ca/) also under "Android Package Tools".
 In the case of "TheLine", we also see that some of the classes were provided by the firm "Tencent". Attempts have been made to obfuscate the source-code,
 sometimes we are left with non-descript single-character names for classes and variables. If you're not used to reading Java, it can be hard to know

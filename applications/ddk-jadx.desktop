@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=JADX
+Exec=/tools/jadx/build/jadx/bin/jadx-gui 
+Comment=
+Icon=
+NoDisplay=false
+Categories=AndroidPackageTools;
+Type=Application

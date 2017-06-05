@@ -15,7 +15,7 @@ ENV HOME /root
 RUN apt-mark hold initscripts udev plymouth mountall
 RUN dpkg-divert --local --rename --add /sbin/initctl && ln -sf /bin/true /sbin/initctl
 
-RUN apt-get update && apt-get install -y --force-yes --no-install-recommends supervisor \
+RUN apt-get update && apt-get install -y --force-yes --no-install-recommends    supervisor \
         openssh-server pwgen sudo vim-tiny \
         net-tools \
         lxde x11vnc xvfb \
@@ -92,8 +92,6 @@ RUN tar -xf /tools/dex2jar/dex-tools/build/distributions/dex-tools-2.1-SNAPSHOT.
 RUN chmod a+x /tools/dex2jar/dex-tools-2.1-SNAPSHOT/*.sh
 ENV PATH $PATH:/tools/dex2jar/dex-tools-2.1-SNAPSHOT    
     
-RUN wget http://www.onyxbits.de/sites/default/files/download/25/raccoon-3.7.jar
-
 RUN dpkg --add-architecture i386
 RUN apt-get update && apt-get install -y --force-yes libc6:i386 libncurses5:i386 libstdc++6:i386
 RUN wget https://bitbucket.org/iBotPeaches/apktool/downloads/apktool_2.2.1.jar
@@ -174,6 +172,10 @@ RUN cd snappy-1.1.2 && ./configure && make && make install
 #RUN unzip mercury-v1.0.zip
 #RUN cd androguard && ln -s ../mercury ./mercury
 
+run pip install --upgrade pip
+RUN pip install ipython==5.0 \
+    six==1.9.0
+RUN apt-get install -y --force-yes --no-install-recommends libffi-dev
 RUN cd androguard && python setup.py install
 
 #RUN wget https://launchpad.net/gephi/0.8/0.8.2beta/+download/gephi-0.8.2-beta.tar.gz
@@ -182,6 +184,13 @@ RUN cd androguard && python setup.py install
 # http://portswigger.net/burp/proxy.html
 RUN wget https://portswigger.net/DownloadUpdate.ashx?Product=Free
 RUN mv DownloadUpdate.ashx?Product=Free burpsuite_free.jar
+
+RUN cd /tools && git clone https://github.com/skylot/jadx.git
+RUN cd /tools/jadx && ./gradlew dist
+
+#RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.1.0.jar
+
+#RUN cd /tools && wget https://framagit.org/tuxicoman/googleplaydownloader/raw/master/packages/googleplaydownloader_2.2-1_all.deb
 
 ENV USERNAME ubuntu    
 RUN export PASS=ubuntu && useradd --create-home --shell /bin/bash --user-group --groups adm,sudo $USERNAME \

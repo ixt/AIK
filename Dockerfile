@@ -188,7 +188,7 @@ RUN mv DownloadUpdate.ashx?Product=Free burpsuite_free.jar
 RUN cd /tools && git clone https://github.com/skylot/jadx.git
 RUN cd /tools/jadx && ./gradlew dist
 
-#RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.1.0.jar
+RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.1.2.jar
 
 #RUN cd /tools && wget https://framagit.org/tuxicoman/googleplaydownloader/raw/master/packages/googleplaydownloader_2.2-1_all.deb
 

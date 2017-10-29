@@ -1,0 +1,2 @@
+sudo docker run --rm --name alp -d -p 8080:8080 -p 8000:8000 -p 7000:7000 --privileged -v /dev/bus/usb:/dev/bus/usb ddk
+

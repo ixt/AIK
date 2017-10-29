@@ -12,12 +12,12 @@ echo Package: $pkg
 # http://stackoverflow.com/questions/26746853/strange-behaviour-of-adb-pull-in-bash-script
 db=$(adb shell "su -c 'ls data/data/$pkg/databases ' " | tr -d '\r' ) 
 echo Databases: echo $db
-mkdir -p $HOME/databases/$pkg
-cd $HOME/databases/$pkg
+mkdir -p $HOME/Databases/$pkg
+cd $HOME/Databases/$pkg
 for f in $db
 do
     echo $f
     adb shell "su -c 'cp /data/data/$pkg/databases/$f /sdcard' "
-    adb pull /sdcard/$f $HOME/databases/$pkg
+    adb pull /sdcard/$f $HOME/Databases/$pkg
         adb shell "su -c 'rm /sdcard/$f' "
 done

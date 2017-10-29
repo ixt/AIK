@@ -75,7 +75,7 @@ RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.1.
 RUN apk add python3 
 RUN pip3 install browsepy mkdocs
 
-RUN apk add leafpad gpicview grep xarchiver coreutils
+RUN apk add leafpad gpicview grep xarchiver coreutils xfce4-screenshooter
 
 ENV HOMEDIR /root
 ENV DROIDBIN /tools/droidbin

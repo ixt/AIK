@@ -8,7 +8,7 @@ got_nc=$( adb shell "su -c 'ls /system/xbin' " | grep ^netcat )
 if [ -z "$got_nc" ]
 then
     echo Pushing netcat to the device
-    adb push $droidbin/netcat /storage/sdcard0/
+    adb push $DROIDBIN/netcat /storage/sdcard0/
     adb shell "su -c 'cp /storage/sdcard0/netcat /system/xbin; chmod 555 /system/xbin/netcat' "
 fi
 
@@ -17,7 +17,7 @@ got_tcpdump=$( adb shell "su -c 'ls /system/xbin' " | grep ^tcpdump )
 if [ -z "$got_tcpdump" ]
 then
     echo Pushing tcpdump to the device
-    adb push $droidbin/tcpdump /storage/sdcard0/
+    adb push $DROIDBIN/tcpdump /storage/sdcard0/
     adb shell "su -c 'cp /storage/sdcard0/tcpdump /system/xbin; chmod 555 /system/xbin/tcpdump' "
 fi
 

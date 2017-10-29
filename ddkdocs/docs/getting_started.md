@@ -36,7 +36,7 @@ In our case, the VM has been set up to listen for network traffic on port 7000, 
 
 Visit [http://localhost:7000](http://localhost:7000) to read these docs offline.
 
-The web-based Linux desktop that contains the tools is at: [http://localhost:8080](http://localhost:8080).
+The web-based Linux desktop that contains the tools is at: [http://localhost:8080](http://localhost:8080/vnc.html).
 
 You can download and upload files from and to the VM at: [http://localhost:8000](http://localhost:8000).
 

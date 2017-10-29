@@ -1,6 +1,6 @@
 # All About Android Packages
 
-You now have a web-based desktop to launch the tools from at [http://localhost:8080](http://localhost:8080).
+You now have a web-based desktop to launch the tools from at [http://localhost:8080](http://localhost:8080/vnc.html).
 Find the "Android Package Tools" option in the menu in the top-right corner. Start the program called [Racoon](http://www.onyxbits.de/raccoon).
 
 ![VNC desktop](/img/vnc_1.png)

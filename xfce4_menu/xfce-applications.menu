@@ -1,0 +1,38 @@
+<Menu>
+    <Name>Xfce</Name>
+
+    <DefaultAppDirs/>
+    <DefaultDirectoryDirs/>
+
+    <Include>
+        <Or>
+            <Category>TerminalEmulator</Category>
+            <Category>TextEditor</Category>
+            <Category>FileManager</Category>
+            <Category>Database</Category>
+            <Category>Archiving</Category>
+        </Or>
+    </Include>
+    
+    <Menu>
+        <Name>Android Package Tools</Name>
+        <Include>
+            <Category>AndroidPackageTools</Category> 
+        </Include>    
+    </Menu>
+    
+    <Menu>
+        <Name>Android Device Tools</Name>
+        <Include>
+            <Category>AndroidDeviceTools</Category> 
+        </Include>    
+    </Menu>
+    
+    <Menu>
+        <Name>Network Tools</Name>
+        <Include>
+            <Category>Network</Category> 
+        </Include>    
+    </Menu>
+    
+</Menu>

@@ -14,7 +14,7 @@ RUN apk --update --upgrade add ca-certificates bash net-tools python git x11vnc 
 RUN git clone https://github.com/novnc/noVNC.git
 RUN cd /noVNC/utils && git clone https://github.com/novnc/websockify.git
 
-RUN apk add wget unzip openjdk8 android-tools 
+RUN apk add wget unzip openjdk7 android-tools 
 
 RUN mkdir -p /tools
 ENV PATH $PATH:/tools/
@@ -61,7 +61,7 @@ RUN apk add py-setuptools py-pip python-dev
 RUN pip install twisted service_identity
 RUN git clone https://github.com/mwrlabs/drozer
 WORKDIR /tools/drozer
-RUN PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/bin && python setup.py build && python setup.py install
+RUN PATH=$PATH:/usr/lib/jvm/java-1.7-openjdk/bin && python setup.py build && python setup.py install
 WORKDIR /tools/
 
 RUN wget https://portswigger.net/DownloadUpdate.ashx?Product=Free

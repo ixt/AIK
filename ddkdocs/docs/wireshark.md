@@ -2,7 +2,7 @@
 # Wireshark
 
 What follows is rather complicated and requires a rooted 'phone, not just USB debugging enabled. Network traffic to and from the 'phone will be passed
-to the virtual machine via USB, and analysed with a program called [Wireshark](https://www.wireshark.org/). On the 'hone, network traffic will be
+to the virtual machine via USB, and analysed with a program called [Wireshark](https://www.wireshark.org/). On the 'phone, network traffic will be
 captured using a utility called [TCPdump](http://www.tcpdump.org/). This is common on most Linux distributions, but is often not provided by default
 on Android devices. The source-code must be cross-compiled into an exectutable binary suited for the ARM processors used by most 'phones. The traffic
 is sent and recieved by the [netcat](http://nc110.sourceforge.net/) utility, which must be present on both the 'phone and the virtual machine. Again,

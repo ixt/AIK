@@ -73,7 +73,7 @@ RUN mv DownloadUpdate.ashx?Product=Free burpsuite_free.jar
 RUN wget https://github.com/skylot/jadx/releases/download/v0.6.0/jadx-0.6.0.zip
 RUN unzip jadx-0.6.0.zip && rm jadx-0.6.0.zip 
 
-RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.1.6.jar
+RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.2.1.jar
 
 RUN apk add python3 
 RUN pip3 install browsepy mkdocs

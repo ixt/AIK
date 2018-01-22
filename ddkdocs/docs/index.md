@@ -14,11 +14,11 @@ or [Penetration Testing](https://www.nostarch.com/pentesting) by [Georgia Weidma
 [Android Hacker's Handbook](http://eu.wiley.com/WileyCDA/WileyTitle/productCd-111860864X.html) is also a good read.
 
 You will need:
-* Oracle VirtualBox installed on your computer
-* The VirtualBox appliance .ova file that contains the tools
-* A Google account (preferably one you don't use day-to-day)
-* An Android device (for the latter stages)
-* An unlocked and rooted Android device (for the very latter stages)
+* Oracle VirtualBox installed on your computer,
+* The VirtualBox appliance .ova file that contains the tools,
+* A Google account, (preferably one you don't use day-to-day)
+* An Android device, (for the later stages)
+* An unlocked and rooted Android device. (for the very later stages)
 
 Unlocking and rooting Android devices can be tricky, and can cause damage if done incorrectly. How to do this
 is beyond the scope of this document, however, the DDK does provide the required tools.

@@ -12,7 +12,7 @@ Find the "Android Package Tools" option in the menu in the top-right corner. Sta
 
 ![Raccoon](/img/raccoon_2.png)
 
-Android apps are downloaded from the Google PlayStore in the form of .apk package files.[Racoon](http://www.onyxbits.de/raccoon) allows us to download them
+Android apps are downloaded from the Google PlayStore in the form of .apk package files. [Racoon](http://www.onyxbits.de/raccoon) allows us to download them
 to play with, without having a real Android device. Give it the credentials of your Google account. All that will happen is
 that you will get emails saying that the fake Android devices have been linked to it. It's best to have a "burner"
 account just for doing this. Our "favourite" (most infamous) app from the [Our Data, Ourselves](https://big-social-data.net/) project is a game called
@@ -30,7 +30,7 @@ from the "Android Package Tools" menu. Find the .apk file for "TheLine" in the "
 that wraps a program called [Apktool](https://ibotpeaches.github.io/Apktool/). A folder called "com_onetouchgame_TheLine-12" is created,
 which contains the extracted contents of the package file.
 
-![Apktool Wrapper](/img/apktool_2.png)
+![Apktool Wrapper](/img/apk_tool.png)
 
 All Android packages contain a manifest file, called [AndroidManifest.xml](https://developer.android.com/guide/topics/manifest/manifest-intro.html).
 You can look at this using the "Leafpad" editor. A web-based file browser has also been provided at [http://localhost:8000](http://localhost:8000).
@@ -41,7 +41,8 @@ For a start, search for all occurrences of the "uses-permission" tag. Each permi
 Compare the permissions listed in the PlayStore ("approximate location (network-based)") to those in the manifest
 ("android.permission.ACCESS_COARSE_LOCATION"). You can look these permissions up on the [Android developer site](https://developer.android.com/reference/android/Manifest.permission.html)
 Notice how the permissions are labelled either "normal" or "dangerous", a distinction not made in the PlayStore. Later versions
-of Android require users to explicity authorize "dangerous" permissions while an app is running.
+of Android require users to explicity authorize "dangerous" permissions while an app is running. This [talk](https://youtu.be/n0DlYumayGc) of [Georgia Weidman](https://twitter.com/georgiaweidman)'s
+shows how apps often request permissions they never use.
 
 The package name "com.onetouchgame.TheLine" is mentioned at the top of the file, but you will notice that many entities from
 3rd parties are present, in this case the notification service "jpush.cn" and the analytics service "umeng". The main

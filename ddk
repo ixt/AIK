@@ -1,2 +1,3 @@
+sysctl -w kernel.pax.softmode=1
 docker run --rm --name ddk -p 8080:8080 -p 8000:8000 -p 7000:7000 --privileged -v /dev/bus/usb:/dev/bus/usb ddk
 

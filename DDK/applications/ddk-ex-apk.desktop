@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Extract .apk file
+Exec=/tools/droidscripts/package.sh apktool
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidPackageTools;
+Type=Application

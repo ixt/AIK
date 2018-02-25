@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Pull databases
+Exec=/tools/droidscripts/do_pull_db.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidDeviceTools;
+Type=Application

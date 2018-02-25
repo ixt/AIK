@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Burp Suite
+Exec=java -jar /tools/burpsuite_free.jar
+Comment=
+Icon=
+Terminal=false
+NoDisplay=false
+Categories=Network;
+Type=Application

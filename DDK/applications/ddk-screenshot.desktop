@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Screenshot
+Exec=/tools/droidscripts/do_screenshot.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidDeviceTools;
+Type=Application

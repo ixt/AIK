@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=.dex to .jar
+Exec=/tools/droidscripts/package.sh dex2jar
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidPackageTools;
+Type=Application

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Name=SQLite Browser
+Exec=/tools/sqlitebrowser-3.7.0/src/sqlitebrowser
+Comment=
+Icon=
+NoDisplay=false
+Categories=DDKTools;
+Type=Application

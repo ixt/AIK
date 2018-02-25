@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Wireshark via Netcat
+Exec=/tools/droidscripts/do_ws_nc.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidDeviceTools;
+Type=Application

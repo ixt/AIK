@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Drozer
+Exec=/tools/droidscripts/do_drozer.sh
+Comment=
+Icon=
+Terminal=true
+NoDisplay=false
+Categories=AndroidDeviceTools;
+Type=Application

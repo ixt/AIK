@@ -1,0 +1,23 @@
+version: '2'
+services:
+  neo4j:
+    container_name: ddk_neo
+    image: neo4j
+    ports:
+     - "7474:7474"
+     - "7687:7687"
+    environment:
+     - NEO4J_AUTH=none
+  ddk:
+    build: ./DDK
+    privileged: true
+    command: /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf
+    ports:
+     - "6080:6080" 
+     - "7000:7000"
+     - "8000:8000"
+     - "8080:8080"
+    devices:
+     - "/dev/bus/usb:/dev/bus/usb"
+    depends_on:
+     - neo4j

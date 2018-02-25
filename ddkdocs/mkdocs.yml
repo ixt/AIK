@@ -1,8 +1,0 @@
-site_name: DroidDestructionKit Docs
-pages:
-- Home: index.md
-- Getting Started: getting_started.md
-- Android Packages: apk.md
-- Decompling Code: dex2jar.md
-- Being a 'Droid Developer: droid_dev.md
-- Network Traffic: wireshark.md

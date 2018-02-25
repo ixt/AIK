@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Scan .java source
-Exec=/tools/droidscripts/package.sh scan
-Comment=
-Icon=
-Terminal=true
-NoDisplay=false
-Categories=AndroidPackageTools;
-Type=Application

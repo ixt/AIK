@@ -1,8 +1,0 @@
-[Desktop Entry]
-Name=JD-GUI
-Exec=java -jar /tools/jd-gui-1.4.0.jar
-Comment=
-Icon=
-NoDisplay=false
-Categories=AndroidPackageTools;
-Type=Application

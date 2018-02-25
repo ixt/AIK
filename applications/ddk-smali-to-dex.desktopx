@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=.smali to .dex
-Exec=/tools/droidscripts/package.sh smali
-Comment=
-Icon=
-Terminal=true
-NoDisplay=false
-Categories=AndroidPackageTools;
-Type=Application

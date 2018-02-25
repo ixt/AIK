@@ -1,9 +1,0 @@
-[Desktop Entry]
-Name=Install Tools
-Exec=/tools/droidscripts/do_push_tools.sh
-Comment=
-Icon=
-Terminal=true
-NoDisplay=false
-Categories=AndroidDeviceTools;
-Type=Application

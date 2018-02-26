@@ -25,6 +25,7 @@ RUN apk --update --upgrade add \
     openrc \
     paxctl \
     procps \
+    py-lxml \
     py-pip \
     py-setuptools \
     python \

@@ -5,7 +5,7 @@ import os
 import re
 import subprocess
 import sys
-import xml.etree.ElementTree as ET
+from lxml import etree as ET
 
 from py2neo import Graph, Node, Relationship
 
@@ -43,13 +43,11 @@ class Ripper(object):
         apk = '.'.join(apkfile.split('/')[-1].split('.')[0:-1])
         output_dir = '/'.join(['/root',apk])
         subprocess.call([self.jadx_path,'-d',output_dir,apkfile])
-        try:
-            manifest = ET.parse('/'.join([output_dir,'AndroidManifest.xml']))
-        except:
-            return False
         
-        package = manifest._root.get('package')
-
+        parser = ET.XMLParser(encoding="utf-8", recover=True)
+        manifest = ET.parse('/'.join([output_dir,'AndroidManifest.xml']), parser=parser)      
+        package = manifest.getroot().get('package',apk)
+        
         get_names = lambda t: [i.get('{http://schemas.android.com/apk/res/android}name') for i in manifest.iter(t)]
         interesting = lambda t: list(filter(lambda n: not n.startswith(package),get_names(t)))
 

@@ -8,6 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
         DISPLAY=:0.0 
 
 RUN echo http://dl-3.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
+RUN echo http://dl-3.alpinelinux.org/alpine/v3.6/main >> /etc/apk/repositories
 
 RUN apk --update --upgrade add ca-certificates bash net-tools python git x11vnc openrc procps xvfb xfce4 socat supervisor
 
@@ -52,7 +53,7 @@ RUN wget https://github.com/mwrlabs/drozer/releases/download/2.3.4/drozer-agent-
 
 RUN apk add wireshark zenity tshark
 
-RUN apk add g++ cmake make qt5-qtbase-dev qt5-qttools-dev
+RUN apk add g++ cmake=3.8.1-r0 make qt5-qtbase-dev qt5-qttools-dev
 WORKDIR /tools/
 RUN wget https://github.com/sqlitebrowser/sqlitebrowser/archive/v3.10.1.zip && unzip v3.10.1.zip && rm v3.10.1.zip
 WORKDIR /tools/sqlitebrowser-3.10.1
@@ -62,7 +63,7 @@ RUN rm -rf /tools/sqlitebrowser-3.10.1
 
 RUN apk add py-setuptools py-pip python-dev
 RUN pip install twisted service_identity
-RUN git clone https://github.com/mwrlabs/drozer
+RUN git clone https://github.com/mwrlabs/drozer drozer
 WORKDIR /tools/drozer
 RUN PATH=$PATH:/usr/lib/jvm/java-1.8-openjdk/bin && python setup.py build && python setup.py install
 WORKDIR /tools/

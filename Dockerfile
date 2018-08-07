@@ -1,4 +1,3 @@
-
 FROM alpine
 
 ENV DEBIAN_FRONTEND=noninteractive \
@@ -10,10 +9,7 @@ ENV DEBIAN_FRONTEND=noninteractive \
 RUN echo http://dl-3.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN echo http://dl-3.alpinelinux.org/alpine/v3.6/main >> /etc/apk/repositories
 
-RUN apk --update --upgrade add ca-certificates bash net-tools python git x11vnc openrc procps xvfb xfce4 socat supervisor
-
-RUN git clone https://github.com/novnc/noVNC.git
-RUN cd /noVNC/utils && git clone https://github.com/novnc/websockify.git
+RUN apk --update --upgrade add ca-certificates bash net-tools python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify
 
 RUN apk add wget unzip openjdk8 android-tools paxctl
 

@@ -8,11 +8,14 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN echo http://dl-3.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN echo http://dl-3.alpinelinux.org/alpine/v3.6/main >> /etc/apk/repositories
+RUN echo http://alpine.reveb.la/builder >> /etc/apk/repositories
 
-RUN apk --update --upgrade add ca-certificates bash net-tools python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify
+RUN apk --update --upgrade --allow-untrusted add ca-certificates bash net-tools python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify sqlitebrowser
 
 RUN apk add wget unzip openjdk8 android-tools paxctl
+RUN apk add g++ make
 
+# Adjust privilege protections for java
 RUN paxctl -c /usr/lib/jvm/java-1.8-openjdk/bin/java
 RUN paxctl -m /usr/lib/jvm/java-1.8-openjdk/bin/java
 
@@ -48,16 +51,9 @@ RUN wget https://github.com/iSECPartners/Android-SSL-TrustKiller/releases/downlo
 RUN wget https://github.com/mwrlabs/drozer/releases/download/2.3.4/drozer-agent-2.3.4.apk
 
 RUN apk add wireshark zenity tshark
-
-RUN apk add g++ cmake=3.8.1-r0 make qt5-qtbase-dev qt5-qttools-dev
 WORKDIR /tools/
-RUN wget https://github.com/sqlitebrowser/sqlitebrowser/archive/v3.10.1.zip && unzip v3.10.1.zip && rm v3.10.1.zip
-WORKDIR /tools/sqlitebrowser-3.10.1
-RUN cmake . && make && make install
-WORKDIR /tools/
-RUN rm -rf /tools/sqlitebrowser-3.10.1
 
-RUN apk add py-setuptools py-pip python-dev
+RUN apk add py-setuptools py-pip python-dev openssl-dev libffi-dev
 RUN pip install twisted service_identity
 RUN git clone https://github.com/mwrlabs/drozer drozer
 WORKDIR /tools/drozer
@@ -70,7 +66,7 @@ RUN mv DownloadUpdate.ashx?Product=Free burpsuite_free.jar
 RUN wget https://github.com/skylot/jadx/releases/download/v0.6.0/jadx-0.6.0.zip
 RUN unzip jadx-0.6.0.zip && rm jadx-0.6.0.zip 
 
-RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.2.1.jar
+RUN wget http://raccoon.onyxbits.de/sites/raccoon.onyxbits.de/files/raccoon-4.2.5.jar
 
 RUN apk add python3 
 RUN pip3 install browsepy mkdocs

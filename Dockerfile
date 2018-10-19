@@ -53,6 +53,11 @@ WORKDIR /tools/apk
 RUN wget https://github.com/iSECPartners/Android-SSL-TrustKiller/releases/download/v1/Android-SSL-TrustKiller.apk
 RUN wget https://github.com/mwrlabs/drozer/releases/download/2.3.4/drozer-agent-2.3.4.apk
 
+RUN mkdir -p /tools/webadb
+WORKDIR /tools/webadb
+RUN wget https://github.com/webadb/webadb.js/archive/master.zip -O webadb.zip
+RUN unzip webadb.zip && rm webadb.zip
+
 RUN apk add wireshark zenity tshark
 RUN apk add py-setuptools py-pip python-dev openssl-dev libffi-dev
 RUN pip install twisted service_identity drozer

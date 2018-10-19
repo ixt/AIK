@@ -20,6 +20,16 @@ Play with the tools via the VNC Desktop: http://127.0.0.1:6080/vnc.html
 
 <img src="https://raw.githubusercontent.com/kingsBSD/DroidDestructionKit/master/screenshots/ddk_demo.png"/>
 
+Set up ADB using webadb hosted on http://127.0.0.1:8001/webadb.js-master/tcpip.html  
+
+Then connect adb with your devices IP found usually in 
+Settings -> About Phone -> Status -> IP address
+
+```
+adb connect DEVICE_IP:5555
+```
+
+
 
 Tools:
 ======

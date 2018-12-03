@@ -60,6 +60,7 @@ RUN unzip webadb.zip && rm webadb.zip
 
 RUN apk add wireshark zenity tshark
 RUN apk add py-setuptools py-pip python-dev openssl-dev libffi-dev
+RUN pip install -U pip
 RUN pip install twisted service_identity drozer
 
 WORKDIR /tools/

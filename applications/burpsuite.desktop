@@ -2,7 +2,7 @@
 Name=Burp Suite
 Exec=java -jar /tools/burpsuite_free.jar
 Comment=
-Icon=
+Icon=/icons/burpsuite_icon.jpg
 Terminal=false
 NoDisplay=false
 Categories=Network;

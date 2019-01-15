@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Raccoon
 Exec=java -jar /tools/raccoon-4.2.6.jar
-Icon=
+Icon=/icons/racoon_icon.png
 NoDisplay=false
 Categories=AndroidPackageTools;
 Type=Application

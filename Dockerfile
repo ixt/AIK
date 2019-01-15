@@ -13,7 +13,7 @@ ADD orange@reveb.la-5b97ad9b.rsa.pub /etc/apk/keys/orange@reveb.la-5b97ad9b.rsa.
 
 RUN apk --update --upgrade --allow-untrusted add ca-certificates bash net-tools \
     python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify \
-    sqlitebrowser
+    sqlitebrowser firefox-esr
 
 RUN apk add wget unzip openjdk8 android-tools paxctl
 RUN apk add g++ make
@@ -87,6 +87,7 @@ ADD xfce4_menu /root/.config/menus
 ADD xfce4 /root/.config/xfce4
 
 ADD applications /usr/share/applications
+ADD icons /icons
 
 WORKDIR /root
 RUN mkdir -p Raccoon/content/apps

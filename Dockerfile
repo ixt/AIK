@@ -13,7 +13,7 @@ ADD orange@reveb.la-5b97ad9b.rsa.pub /etc/apk/keys/orange@reveb.la-5b97ad9b.rsa.
 
 RUN apk --update --upgrade --allow-untrusted add ca-certificates bash net-tools \
     python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify \
-    sqlitebrowser firefox-esr
+    sqlitebrowser firefox-esr newt
 
 RUN apk add wget unzip openjdk8 android-tools paxctl
 RUN apk add g++ make
@@ -92,6 +92,9 @@ ADD icons /icons
 WORKDIR /root
 RUN mkdir -p Raccoon/content/apps
 RUN ln -s Raccoon/content/apps
+
+RUN wget https://github.com/ixt/HAndHold/archive/master.zip
+RUN unzip master.zip && mv HAndHold-master/ /tools/HAndHold && rm master.zip
 
 ADD ddkdocs /ddkdocs
 WORKDIR /ddkdocs

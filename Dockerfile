@@ -13,10 +13,13 @@ ADD orange@reveb.la-5b97ad9b.rsa.pub /etc/apk/keys/orange@reveb.la-5b97ad9b.rsa.
 
 RUN apk --update --upgrade --allow-untrusted add ca-certificates bash net-tools \
     python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify \
-    sqlitebrowser firefox-esr newt
+    sqlitebrowser firefox-esr newt adwaita-gtk2-theme adwaita-icon-theme
 
 RUN apk add wget unzip openjdk8 android-tools paxctl
 RUN apk add g++ make
+
+# Cleanup menu
+RUN rm /usr/share/applications/exo-mail-reader.desktop /usr/share/applications/exo-preferred-applications.desktop  
 
 # Adjust privilege protections for java
 RUN paxctl -c /usr/lib/jvm/java-1.8-openjdk/bin/java
@@ -103,5 +106,12 @@ RUN mkdocs build
 WORKDIR /root
 
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+RUN mkdir /root/Desktop
+COPY applications/ddk-jadx.desktop /root/Desktop
+COPY applications/ddk-raccoon.desktop /root/Desktop
+COPY applications/ddk-HAndHold.desktop /root/Desktop
+WORKDIR /root/Desktop
+RUN chmod +x *.desktop
 
+WORKDIR /root
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

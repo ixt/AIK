@@ -40,9 +40,16 @@
       <property name="show-filesystem" type="bool" value="false"/>
       <property name="show-home" type="bool" value="false"/>
     </property>
+    <property name="show-tooltips" type="bool" value="true"/>
+    <property name="show-thumbnails" type="bool" value="true"/>
+    <property name="show-hidden-files" type="bool" value="false"/>
+    <property name="use-custom-font-size" type="bool" value="false"/>
   </property>
   <property name="last" type="empty">
-    <property name="window-width" type="int" value="686"/>
-    <property name="window-height" type="int" value="520"/>
+    <property name="window-width" type="int" value="709"/>
+    <property name="window-height" type="int" value="551"/>
+  </property>
+  <property name="desktop-menu" type="empty">
+    <property name="show-icons" type="bool" value="true"/>
   </property>
 </channel>

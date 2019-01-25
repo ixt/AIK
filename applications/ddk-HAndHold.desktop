@@ -1,6 +1,6 @@
 [Desktop Entry]
-Name=Push .apk
-Exec=/tools/droidscripts/do_push_apk.sh
+Name=HAndHold
+Exec=/tools/HAndHold/HAndHold.sh "/root/Desktop/APKS"
 Comment=
 Icon=
 Terminal=true

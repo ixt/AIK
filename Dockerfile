@@ -8,12 +8,10 @@ ENV DEBIAN_FRONTEND=noninteractive \
 
 RUN echo http://dl-3.alpinelinux.org/alpine/edge/testing >> /etc/apk/repositories
 RUN echo http://dl-3.alpinelinux.org/alpine/v3.6/main >> /etc/apk/repositories
-RUN echo http://alpine.reveb.la/builder >> /etc/apk/repositories
-ADD orange@reveb.la-5b97ad9b.rsa.pub /etc/apk/keys/orange@reveb.la-5b97ad9b.rsa.pub
 
 RUN apk --update --upgrade --allow-untrusted add ca-certificates bash net-tools \
     python git x11vnc openrc procps xvfb xfce4 socat supervisor novnc websockify \
-    sqlitebrowser firefox-esr newt adwaita-gtk2-theme adwaita-icon-theme
+    firefox-esr newt adwaita-gtk2-theme adwaita-icon-theme
 
 RUN apk add wget unzip openjdk8 android-tools paxctl
 RUN apk add g++ make
